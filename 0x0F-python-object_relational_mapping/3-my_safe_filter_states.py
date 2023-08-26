@@ -4,14 +4,16 @@
 table of hbtn_0e_0_usa where name matches the argument. But
 this time, write one that is safe from MySQL injections!"""
 
+import sys
 import MySQLdb
-from sys import argv
 
 if __name__ == '__main__':
-    db = MySQLdb.connect(port=3306, user=argv[1],
-                         passwd=argv[2], db=argv[3])
+    db = MySQLdb.connect(user=sys.argv[1], passwd=sys.argv[2],
+                         db=sys.argv[3], port=3306)
+
     cur = db.cursor()
     cur.execute("SELECT * FROM states WHERE name = %s;", (sys.argv[4],))
-    rows = cur.fetchall()
-    for i in rows:
-        print(i)
+    states = cur.fetchall()
+
+    for state in states:
+        print(state)
