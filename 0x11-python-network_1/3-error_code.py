@@ -7,8 +7,11 @@ import urllib.error
 import sys
 
 if __name__ == "__main__":
-    req = Request(argv[1])
+    req = urllib.request.Request(sys.argv[1])
+
     try:
-        response = urlopen(req)
-    except HTTPError as e:
-        print('Error code: ', e.code)
+        with urllib.request.urlopen(req) as response:
+            req_1 = response.read().decode('utf8')
+        print(req_1)
+    except urllib.error.HTTPError as e:
+        print('Error code: {}'.format(e.code))
